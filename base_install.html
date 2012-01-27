@@ -1,0 +1,33 @@
+#!/bin/bash
+
+yum update -y
+
+yum remove php php-* -y
+
+yum install gcc gdb gcc-c++  httpd httpd-* php53 php53-* mysql mysql-* subversion python python* mysql-python  -y
+
+
+
+mkdir -m 777 tinstall
+cd tinstall/
+
+wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2
+tar -jxvf Python-2.7.2.tar.bz2
+cd Python-2.7.2
+./configure --enable-shared
+make
+make install
+cp /usr/local/lib/libpython2.7.so* /usr/lib64
+rm -f /usr/bin/python
+ln -s /usr/bin/python2.4 /usr/bin/python
+cd ..
+
+wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5=fe1f997bc722265116870bc7919059ea
+sh setuptools-0.6c11-py2.7.egg
+
+
+wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download
+tar zxvf MySQL-python-1.2.3.tar.gz
+cd MySQL-python-1.2.3
+python2.7 setup.py install
+
